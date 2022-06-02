@@ -1,0 +1,27 @@
+criar branch
+ git checkout -b nome-branch
+		 ex. feature-nome-etc (utilizado para criar algo novo)
+ 		      hotfix-nome-etc (utilizado para corrigir um erro)
+
+ git status (ve se tem alteração, status do projeto etc..)
+
+ git add . (adiciona as alterações)
+ 
+ git commit -m "mensagme de commit"  (sempre fazer commit antes de subir alteração)
+
+ git push -u origin feature-nome (sempre que for mergear uma feature pela primeira vez)
+ 
+ git push feature-nome (push em branch que ja existe)
+
+
+git flow:
+
+1 Criar branch e trabalhar nela
+2 Projeto ta funcionado um modulo mec ? Sim - da push na branch develop
+ 					Nao - Continua na branch de tramopo
+
+3 Quer subir uma versao do projeto para produção ? push da develop > master
+
+Feature-nome (branch de trampas em local)
+develop (branch de projeto em desenvolvimento)
+master (branch do projeto em produção)
