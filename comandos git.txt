@@ -5,7 +5,7 @@ criar branch
 
  git status (ve se tem alteração, status do projeto etc..)
 
- git add . (adiciona as alterações)
+ git add . (adiciona as alterações) 
  
  git commit -m "mensagme de commit"  (sempre fazer commit antes de subir alteração)
 
