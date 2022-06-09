@@ -80,13 +80,22 @@ a:hover, a:visited:hover, a:active:hover {
   width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
+#joy3Div {
+  width: 200px;
+  height: 200px;
+  margin: 50px;
+  position: fixed;
+  bottom: 30px;
+  left: 1500px;
+}
+
+@media screen and (max-width: 992px) {
   #joy3Div {
-    width: 200px;
-    height: 200px;
-    margin: 50px;
+    width: 155px;
+    height: 105px;
+    margin: 24px;
     position: fixed;
-    bottom: 30px;
-    left: 500px;
+    bottom: 50px;
+    left: 760px;
   }
 }

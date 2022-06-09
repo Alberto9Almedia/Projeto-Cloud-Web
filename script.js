@@ -1,3 +1,5 @@
+import * as joy from joy.js;
+
 (function() {
   //variaveis//
   var Bullet, Enemy, Player, bulletEnemyHandler, bullet_time, bullets, bullets_count, checkInput, controls, create, currentHorizontalDirection, currentVerticalDirection, drawShape, enemies, enemies_bullets, enemies_count, game, gameOver, killEnemy, max_delay, min_delay, motion, motionUpdate, motion_timer, moveBullets, moveEnemies, movePlayer, nextLevel, player, playerEnemyHandler, preload, render, resetGame, score, score_text, slowDownTime, spawnText, speed, speedUpTime, text, time, update, updateMotion, updateScore;
@@ -45,7 +47,6 @@
 
  
   create = function() {
-    
  
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.scale.pageAlignVertically = true;
@@ -57,13 +58,19 @@
     
     game.physics.startSystem(Phaser.Physics.ARCADE);
    
+    var joy3IinputPosX = document.getElementById("joy3PosizioneX");
+
+
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
-    this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.UP);
+    //this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.UP);
+    this.game.input.keyboard.addKeyCapture(joy3IinputPosX);
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.DOWN);
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.LEFT);
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.RIGHT);
+
     controls = {
-      "up": game.input.keyboard.addKey(Phaser.Keyboard.UP),
+      "up":game.input.keyboard.addKey(joy3IinputPosX),
+      //"up": game.input.keyboard.addKey(Phaser.Keyboard.UP),
       "down": game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
       "left": game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
       "right": game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
