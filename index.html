@@ -1,32 +1,52 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Projeto</title>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <title>PROJETO UNINOVE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Orbitron'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="./style.css">
+
+  <script src="joy.js"></script>
 </head>
+
 <body>
-   <div class="main-login">
-       <div class="left-login">
-           <h1>Teste<br>Testando o teste do teste</h1>
-           <img src="catnauta.svg" class="left-login-image" alt="Cat Astronauta">
-        </div>
-        <div class="right-login">
-            <div class="card-login">
-                <h1>LOGIN</h1>
-                <div  class="textfield">
-                    <label for="usuario">Usuário</label>
-                    <input type="text" name="usuario" placeholder="Usuário">
-                </div>  
-                <div  class="textfield">
-                    <label for="senha">Senha</label>
-                    <input type="password" name="senha" placeholder="Senha">
-                </div> 
-                <button class="btn-login">Login</button>
-            </div>
-        </div>        
-   </div>
+  <!-- Example of FIXED or ABSOLUTE position -->
+  <div id="joy3Div" style="width:200px;height:200px;margin:50px;position:fixed;bottom:30px;left:1500px;"></div>
+  <div style="position:fixed;bottom:125px;left:750px;">
+  </div>
+
+  <script type="text/javascript">
+    var joy3Param = { "title": "joystick3" };
+    var Joy3 = new JoyStick('joy3Div', joy3Param);
+
+    var joy3IinputPosX = document.getElementById("joy3PosizioneX");
+    var joy3InputPosY = document.getElementById("joy3PosizioneY");
+    var joy3Direzione = document.getElementById("joy3Direzione");
+    var joy3X = document.getElementById("joy3X");
+    var joy3Y = document.getElementById("joy3Y");
+
+    setInterval(function () { joy3IinputPosX.value = Joy3.GetPosX(); }, 50);
+    setInterval(function () { joy3InputPosY.value = Joy3.GetPosY(); }, 50);
+    setInterval(function () { joy3Direzione.value = Joy3.GetDir(); }, 50);
+    setInterval(function () { joy3X.value = Joy3.GetX(); }, 50);
+    setInterval(function () { joy3Y.value = Joy3.GetY(); }, 50);
+  </script>
+
+  <div id="game"></div>
+
+  <h2> SETAS PARA MOVER +<br> BARRA DE ESPAÇO PARA ATIRAR<br></h2>
+  <p>
+    INSPIRAÇÃO <a href="https://superhotgame.com" target="_blank">SUPERHOT</a>
+    </div>
+    <script src="joy.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.6/phaser.min.js'></script>
+    <script src='https://codepen.io/benjaminmiles/pen/d14661d23aaff5e33949bd197b07b2ad.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js'></script>
+    <script src="./script.js"></script>
 </body>
+
 </html>
