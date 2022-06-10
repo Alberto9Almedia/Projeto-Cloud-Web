@@ -9,7 +9,7 @@
   bullets = null;
 
   bullets_count = 5;
-
+ 
   bullet_time = 0;
 
   enemies = null;
