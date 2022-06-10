@@ -1,8 +1,8 @@
-import * as joy from joy.js;
-
-(function() {
+(function () {
   //variaveis//
-  var Bullet, Enemy, Player, bulletEnemyHandler, bullet_time, bullets, bullets_count, checkInput, controls, create, currentHorizontalDirection, currentVerticalDirection, drawShape, enemies, enemies_bullets, enemies_count, game, gameOver, killEnemy, max_delay, min_delay, motion, motionUpdate, motion_timer, moveBullets, moveEnemies, movePlayer, nextLevel, player, playerEnemyHandler, preload, render, resetGame, score, score_text, slowDownTime, spawnText, speed, speedUpTime, text, time, update, updateMotion, updateScore;
+  var Bullet, Enemy, Player, bulletEnemyHandler, bullet_time, bullets, bullets_count, checkInput, controls, create, currentHorizontalDirection, currentVerticalDirection, drawShape, enemies, enemies_bullets, enemies_count, game, gameOver, killEnemy, max_delay, min_delay, motion, motionUpdate, motion_timer, moveBullets, moveEnemies, movePlayer, nextLevel, player, playerEnemyHandler, preload, render, resetGame, score, score_text, slowDownTime, spawnText, speed, speedUpTime, text, time, update, updateMotion, updateScore, nomePlayer, textNomePlayer;
+
+  nomePlayer = null;
 
   player = null;
 
@@ -42,63 +42,60 @@ import * as joy from joy.js;
 
   currentHorizontalDirection = false;
 
-  
-  preload = function() {};
 
- 
-  create = function() {
- 
+  preload = function () { };
+
+
+  create = function () {
+
+
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.scale.pageAlignVertically = true;
     game.scale.pageAlignHorizontally = true;
-    
-  
-    game.stage.backgroundColor = '#CCCCCC';
-    
-    
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-   
-    var joy3IinputPosX = document.getElementById("joy3PosizioneX");
 
+
+    game.stage.backgroundColor = '#CCCCCC';
+
+
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
-    //this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.UP);
-    this.game.input.keyboard.addKeyCapture(joy3IinputPosX);
+    this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.UP);
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.DOWN);
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.LEFT);
     this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.RIGHT);
-
     controls = {
-      "up":game.input.keyboard.addKey(joy3IinputPosX),
-      //"up": game.input.keyboard.addKey(Phaser.Keyboard.UP),
+      "up": game.input.keyboard.addKey(Phaser.Keyboard.UP),
       "down": game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
       "left": game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
       "right": game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
     };
     //inicia o jogo
+    namePlayer = getNamePlayer()
     return nextLevel();
   };
 
+
   //reseta
-  resetGame = function() {
+  resetGame = function () {
     var bullet, enemy, i;
-    
-    
+
+
     game.world.removeAll();
     //score
     score_text = game.add.text(game.world.width - 60, 10, score);
     score_text.align = 'right';
     score_text.font = 'Orbitron';
     score_text.fontSize = 40;
-    score_text.fill = '#ff0000';
-    
+    score_text.fill = '#0080ff';
+
     //adiciona player
     player = new Player(game, game.rnd.integerInRange(100, game.world.width - 100), 500, drawShape(32, 32, '#FFFFFF'));
-    
+
     //tiro player
     bullets = game.add.group();
-    
-    
+
+
     i = 0;
     while (i < bullets_count) {
       bullet = new Bullet(game, 0, 0, drawShape(10, 10, '#000000'));
@@ -106,8 +103,8 @@ import * as joy from joy.js;
       bullet.events.onOutOfBounds.add(bullet.kill, bullet);
       i++;
     }
-    
-    
+
+
     enemies = game.add.group();
     enemies_bullets = game.add.group();
     i = 0;
@@ -116,14 +113,14 @@ import * as joy from joy.js;
       enemies.add(enemy);
       i++;
     }
-    
-    
+
+
     return motion_timer = game.time.events.loop(60, motionUpdate, this);
   };
 
-  
-  
-  drawShape = function(width = 64, height = 64, color = '#ff0000') {
+
+
+  drawShape = function (width = 64, height = 64, color = '#005ab3') {
     var bmd;
     bmd = game.add.bitmapData(width, height);
     bmd.ctx.beginPath();
@@ -133,17 +130,17 @@ import * as joy from joy.js;
     return bmd;
   };
 
-  
-  
-  checkInput = function() {
-    
+
+
+  checkInput = function () {
+
     if (controls.up.isDown || controls.down.isDown || controls.left.isDown || controls.right.isDown) {
       speedUpTime();
     } else {
       slowDownTime();
     }
-    
-    
+
+
     if (controls.left.isDown) {
       currentHorizontalDirection = "left";
     } else if (controls.right.isDown) {
@@ -160,68 +157,68 @@ import * as joy from joy.js;
     } else {
       currentVerticalDirection = false;
     }
-    
+
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
       return player.fireBullet(currentHorizontalDirection, currentVerticalDirection);
     }
   };
 
- 
-  movePlayer = function() {
+
+  movePlayer = function () {
     return player.motionUpdate();
   };
 
-  moveEnemies = function() {
-    
-    return enemies.forEachAlive(function(enemy) {
+  moveEnemies = function () {
+
+    return enemies.forEachAlive(function (enemy) {
       return enemy.motionUpdate();
     });
   };
 
-  moveBullets = function() {
-    
-    bullets.forEachAlive(function(bullet) {
+  moveBullets = function () {
+
+    bullets.forEachAlive(function (bullet) {
       return bullet.motionUpdate();
     });
-    
-    return enemies_bullets.forEachAlive(function(bullet) {
+
+    return enemies_bullets.forEachAlive(function (bullet) {
       return bullet.motionUpdate();
     });
   };
 
-  
-  
-  playerEnemyHandler = function(player, enemy) {
-    
+
+
+  playerEnemyHandler = function (player, enemy) {
+
     if (enemy.can_kill) {
       enemy.can_kill = false;
-      player.tint = 0xff0000;
-      return game.time.events.add(Phaser.Timer.SECOND * 0.2, function() {
+      player.tint = 0x0080ff;
+      return game.time.events.add(Phaser.Timer.SECOND * 0.2, function () {
         return gameOver();
       }, this);
     }
   };
 
-  bulletEnemyHandler = function(bullet, enemy) {
+  bulletEnemyHandler = function (bullet, enemy) {
     enemy.tint = 0x000000;
     bullet.kill();
     enemy.can_kill = false;
     updateScore(score += 1);
-    return game.time.events.add(Phaser.Timer.SECOND * 0.2, function() {
+    return game.time.events.add(Phaser.Timer.SECOND * 0.2, function () {
       return killEnemy(enemy);
     }, this);
   };
 
-  killEnemy = function(enemy) {
+  killEnemy = function (enemy) {
     enemy.kill();
     if (!enemies.getFirstAlive()) {
       return nextLevel();
     }
   };
 
-  
- 
-  speedUpTime = function() {
+
+
+  speedUpTime = function () {
     if (motion_timer.delay > min_delay) {
       motion_timer.delay -= 2;
     } else {
@@ -230,7 +227,7 @@ import * as joy from joy.js;
     return time = motion_timer.delay + speed;
   };
 
-  slowDownTime = function() {
+  slowDownTime = function () {
     if (motion_timer.delay < max_delay) {
       motion_timer.delay += 2;
     } else {
@@ -239,90 +236,142 @@ import * as joy from joy.js;
     return time = motion_timer.delay - speed;
   };
 
-  
-  
-  updateMotion = function() {
-    
+
+
+  updateMotion = function () {
+
     return motion = (100 - (time * 2)) + speed;
   };
 
   
-  
-  gameOver = function() {
+
+  gameOver = function () {
+    salvarPlacar()
+
+  mostrarPlacar()
     enemies_count = 1;
     updateScore(0);
     resetGame();
     spawnText("GAME");
-    return game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {
+    return game.time.events.add(Phaser.Timer.SECOND * 0.5, function () {
       return spawnText("OVER");
     }, this);
   };
 
-  
-  
-  nextLevel = function() {
-    
+  async function mostrarPlacar() {
+
+        // make API call with parameters and use promises to get response
+        const response = await  fetch("https://zjsw9q6d11.execute-api.sa-east-1.amazonaws.com/Beta/ ")
+        var data = await response.json();
+
+        console.log(data);
+        alert(`                 SCORE DOS MELHORES!!!!\n
+                Player: ${data[0].ID} Score: ${data[0].LatestGreetingTime}\n
+                Player: ${data[1].ID} Score: ${data[1].LatestGreetingTime}\n
+                Player: ${data[2].ID} Score: ${data[2].LatestGreetingTime}\n
+                Player: ${data[3].ID} Score: ${data[3].LatestGreetingTime}\n
+                Player: ${data[4].ID} Score: ${data[4].LatestGreetingTime}\n
+                Player: ${data[5].ID} Score: ${data[5].LatestGreetingTime}\n
+                Player: ${data[6].ID} Score: ${data[6].LatestGreetingTime}\n
+                Player: ${data[7].ID} Score: ${data[7].LatestGreetingTime}\n
+                Player: ${data[8].ID} Score: ${data[8].LatestGreetingTime}\n
+                Player: ${data[9].ID} Score: ${data[9].LatestGreetingTime}`);
+        
+ 
+  }
+
+
+  salvarPlacar = function () {
+   
+        // instantiate a headers object
+        var myHeaders = new Headers();
+        // add content type header to object
+        myHeaders.append("Content-Type", "application/json");
+        // using built in JSON utility package turn object to string and store in a variable
+        var raw = JSON.stringify({"nomePlayer":namePlayer,"score":score});
+        // create a JSON object with parameters for API call and store in a variable
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        // make API call with parameters and use promises to get response
+        fetch("https://zjsw9q6d11.execute-api.sa-east-1.amazonaws.com/Dev", requestOptions)
+        .then(response => response.text())
+        .then(result => alert(JSON.parse(result).body))
+        .catch(error => console.log('error', error));
+
+  }
+
+  nextLevel = function () {
     enemies_count++;
     resetGame();
-    spawnText("SUPER");
-    return game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {
-      return spawnText("HOT");
+    spawnText("HYPER");
+    return game.time.events.add(Phaser.Timer.SECOND * 0.5, function () {
+      return spawnText("FRIO");
     }, this);
   };
 
-  
-  
-  spawnText = function(text = false, lifespan = 0.5) {
+  getNamePlayer = function () {
+ 
+   var name = window.prompt("Enter your name: ");
+   namePlayer = name;
+   return name;
+
+  }
+
+  spawnText = function (text = false, lifespan = 0.5) {
     if (text) {
       text = game.add.text(game.world.centerX, game.world.centerY, text);
       text.anchor.set(0.5);
       text.align = 'center';
       text.font = 'Orbitron';
       text.fontSize = 150;
-      text.fill = '#ff0000';
-      return game.time.events.add(Phaser.Timer.SECOND * lifespan, function() {
+      text.fill = '#005ab3';
+      return game.time.events.add(Phaser.Timer.SECOND * lifespan, function () {
         return text.kill();
       }, this);
     }
   };
 
-  
-  updateScore = function(points) {
+
+  updateScore = function (points) {
     score = points;
     return score_text.text = score;
   };
 
-  
-  
-  motionUpdate = function() {
+
+
+  motionUpdate = function () {
     updateMotion();
     movePlayer();
     moveEnemies();
     return moveBullets();
   };
 
-  
-  
-  update = function() {
+
+
+  update = function () {
     checkInput();
-    
-    
+
+
     game.physics.arcade.overlap(player, enemies, playerEnemyHandler, null, this);
-    
+
     game.physics.arcade.overlap(player, enemies_bullets, playerEnemyHandler, null, this);
-    
+
     game.physics.arcade.overlap(bullets, enemies, bulletEnemyHandler, null, this);
-    
+
     return game.physics.arcade.collide(bullets, enemies_bullets);
   };
 
-  
 
-  
-  render = function() {};
 
-  
-  Player = function(game, x, y, sprite) {
+
+  render = function () { };
+
+
+  Player = function (game, x, y, sprite) {
     Phaser.Sprite.call(this, game, x, y, sprite);
     game.physics.arcade.enable(this);
     this.game = game;
@@ -334,15 +383,15 @@ import * as joy from joy.js;
     return game.add.existing(this);
   };
 
-  
+
   Player.prototype = Object.create(Phaser.Sprite.prototype);
 
   Player.prototype.constructor = Player;
 
-  
-  Player.prototype.motionUpdate = function() {
+
+  Player.prototype.motionUpdate = function () {
     var speed_modifier;
-    
+
     speed_modifier = speed / 6;
     if (controls.up.isDown) {
       this.body.velocity.y = -motion * speed_modifier;
@@ -368,7 +417,7 @@ import * as joy from joy.js;
     }
   };
 
-  Player.prototype.reposition = function() {
+  Player.prototype.reposition = function () {
     if (this.x < 0) {
       return this.x = game.world.width;
     } else if (this.x > game.world.width) {
@@ -380,7 +429,7 @@ import * as joy from joy.js;
     }
   };
 
-  Player.prototype.fireBullet = function(h = false, v = false) {
+  Player.prototype.fireBullet = function (h = false, v = false) {
     var bullet;
     if (game.time.now > bullet_time) {
       bullet = bullets.getFirstExists(false);
@@ -394,9 +443,9 @@ import * as joy from joy.js;
     }
   };
 
-  
-  
-  Bullet = function(game, x, y, sprite, h = false, v = "up") {
+
+
+  Bullet = function (game, x, y, sprite, h = false, v = "up") {
     Phaser.Sprite.call(this, game, x, y, sprite);
     game.physics.arcade.enable(this);
     this.game = game;
@@ -411,16 +460,16 @@ import * as joy from joy.js;
     return this.v = v;
   };
 
-  
+
   Bullet.prototype = Object.create(Phaser.Sprite.prototype);
 
   Bullet.prototype.constructor = Bullet;
 
-  
-  Bullet.prototype.motionUpdate = function() {
+
+  Bullet.prototype.motionUpdate = function () {
     var speed_modifier;
-    
-    
+
+
     speed_modifier = speed / 2;
     switch (this.h) {
       case "left":
@@ -437,9 +486,9 @@ import * as joy from joy.js;
     }
   };
 
-  
-  
-  Enemy = function(game, x, y, sprite) {
+
+
+  Enemy = function (game, x, y, sprite) {
     Phaser.Sprite.call(this, game, x, y, sprite);
     game.physics.arcade.enable(this);
     this.game = game;
@@ -455,46 +504,46 @@ import * as joy from joy.js;
     return this.can_shoot = true;
   };
 
-  
+
   Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 
   Enemy.prototype.constructor = Enemy;
 
-  
-  Enemy.prototype.motionUpdate = function() {
-    
-        
+
+  Enemy.prototype.motionUpdate = function () {
+
+
     switch (this.type) {
       case 1:
-        
+
         this.body.velocity.y = motion;
         break;
       case 2:
-        
+
         this.body.velocity.x = -motion;
         break;
       case 3:
-        
+
         this.body.velocity.x = motion;
         break;
       default:
-        
+
         this.game.physics.arcade.moveToObject(this, player, motion);
     }
-    
-    
+
+
     if (this.can_shoot) {
       this.fireBullet();
       this.can_shoot = false;
-      
-      
-      return this.game.time.events.add(Phaser.Timer.SECOND * this.game.rnd.integerInRange(3, 10), function() {
+
+
+      return this.game.time.events.add(Phaser.Timer.SECOND * this.game.rnd.integerInRange(3, 10), function () {
         return this.can_shoot = true;
       }, this);
     }
   };
 
-  Enemy.prototype.reposition = function() {
+  Enemy.prototype.reposition = function () {
     if (this.x < 0) {
       return this.x = game.world.width;
     } else if (this.x > game.world.width) {
@@ -506,12 +555,12 @@ import * as joy from joy.js;
     }
   };
 
-  Enemy.prototype.fireBullet = function() {
+  Enemy.prototype.fireBullet = function () {
     var buffer, bullet, h, v;
-    bullet = new Bullet(game, 0, 0, drawShape(10, 10, '#ff0000'));
+    bullet = new Bullet(game, 0, 0, drawShape(10, 10, '#0080ff'));
     enemies_bullets.add(bullet);
     bullet.reset(this.x, this.y);
-    
+
     buffer = 100;
     if (player.x < this.x - buffer) {
       h = "left";
@@ -531,8 +580,8 @@ import * as joy from joy.js;
     return bullet.v = v;
   };
 
-  
-  
+
+
   game = new Phaser.Game(900, 600, Phaser.AUTO, "game", {
     preload: preload,
     create: create,
