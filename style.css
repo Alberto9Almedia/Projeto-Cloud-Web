@@ -1,133 +1,140 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,500;1,300&display=swap');
-
 body {
-    margin: 0;
-    font-family: 'Noto Sans', sans-serif;   
-}
-body * {
-    box-sizing: border-box;
-}
-
-.main-login{
-    width: 100vw;
-    height: 100vh;
-    background: #201b2c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: #EEE;
+  color: #999;
+  margin: 0;
+  padding: 10px 0px 20px;
+  font-family: "Orbitron", "Helvetica", sans-serif;
+  text-align: center;
+  font-size: 11px;
+  line-height: 16px;
 }
 
-.left-login{
-    width: 50vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+a, a:visited, a:active {
+  color: #666;
+  text-decoration: none;
 }
 
-.left-login > h1 {
-    font-size: 3vw;
-    color: #77ffc0;
+a:hover, a:visited:hover, a:active:hover {
+  color: #222;
 }
 
-.left-login-image{
-    width: 35vw;
+#name {
+  width: 450px;
+  height: 150px;
+  display: fixed;
+  align-items: center;
+  text-align: 'center';
+  font-family: 'Orbitron';
+  color: #ff0000;
 }
 
-.right-login{
-    width: 50vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#enviar {
+  font-family: 'Orbitron';
+  width: 80px;
+  height: 50px;
+  display: fixed;
+  justify-content: center;
+  align-items: center;
 }
 
-.card-login{
-    width: 60%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 30px 35px;
-    background: #2f2841;
-    border-radius: 20px;
-    box-shadow: 0px 10px 40px #00000056;
-
+.container h2 {
+  margin: 10px 0;
+  color: #999;
+  font-size: 18px;
 }
 
-.card-login > h1 {
-    color: #00ff88;
-    font-weight: 800;
-    margin: 0;
+#joyDiv {
+  border: 1px solid #9C9898;
 }
 
-.textfield{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    margin: 10px 0px;
+#JoyStick {
+  color: #222;
+  font-size: 5px;
 }
 
-.textfield > input{
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    padding: 15px;
-    background: #514869;
-    color: #f0ffffde;
-    font-size: 12pt;
-    box-shadow: 0px 10px 40px #00000056;
-    outline: none;
-    box-sizing: border-box;
-
-}
-.textfield > label {
-    color: #f0ffffde;
-    margin-bottom: 08px;
+#game {
+  position: relative;
+  max-width: 85vw;
+  max-height: 75vh;
+  margin: 20px auto 40px;
+  left: -10px;
 }
 
-.textfield> input::placeholder{
-    color: #f0ffffde;
+#game canvas {
+  border: 10px solid white;
 }
 
-.btn-login{
-    width: 100%;
-    padding: 16px 0px;
-    margin: 25px;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 3px;
-    color: #2b134b;
-    background: #00ff88;
-    cursor: pointer;
-    box-shadow: 0px 10px 40px -12px #00ff8052;
+
+#bg {
+  position: absolute;
+  z-index: 100;
+  display: none;
+  margin: -100px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  background: rgba(38, 74, 96, 1);
+  border: solid rgba(0, 0, 0, 0.14) 1px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
-@media only screen and (max-width: 600px){
-    .main-login{
-        flex-direction: column;
-    }
-    .left-login > h1{
-        display: none;
-    }
-    .left-login{
-        width: 100%;
-        height: auto;
-    }
-    .right-login{
-        width: 100%;
-        height: auto;
-    }ge{
-        width: 50vh;
-    .left-login-ima
-    }
-    .card-login {
-        width: 90%;
-    }
+.overlay {
+
+  position: absolute;
+  z-index: 99;
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  #joy3Div {
+    width: 155px;
+    height: 105px;
+    margin: 24px;
+    position: fixed;
+    bottom: 50px;
+    left: 760px;
+  }
+}
+
+
+button {
+  border: none;
+  background-color: black;
+  font-weight: 600;
+  color: white;
+  border: 2px solid white;
+  width: 31px;
+  height: 24px;
+  margin: 6px;
+  left: 10px;
+}
+
+.rbtn {
+  border-radius: 50% 100% 100% 50%;
+  position: absolute;
+  left: 60px;
+  top: 85px;
+}
+
+.lbtn {
+  border-radius: 100% 50% 50% 100%;
+  position: absolute;
+  top: 85px;
+}
+
+.ubtn {
+  transform: rotate(270deg);
+  border-radius: 50% 100% 100% 50%;
+  position: absolute;
+  top: 60px;
+  left: 34px;
+}
+
+.dbtn {
+  transform: rotate(270deg);
+  border-radius: 100% 50% 50% 100%;
+  position: absolute;
+  top: 110px;
+  left: 34px;
 }
